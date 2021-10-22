@@ -1,4 +1,4 @@
-# web-notes-client
+# clientapp
 
 ## Project setup
 ```
