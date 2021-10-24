@@ -1,17 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using WebNotesData.Entities;
 
-namespace WebNotesData.Entities
+namespace WebNotesApi.Models.Users
 {
-    public class User
+    public class AuthenticateResponse
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
         public string Username { get; set; }
+        public string Email { get; set; }
         public Role Role { get; set; }
-
-        [JsonIgnore]
-        public string PasswordHash { get; set; }
+        public string Token { get; set; }
     }
 }
