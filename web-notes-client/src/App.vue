@@ -1,17 +1,32 @@
 <template>
-  <NavBar />
+  <template v-if="!isAuthorized">
+    <NavBar />
 
-  <router-view />
+    <router-view />
+  </template>
+  <template v-else>
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <SideBar />
+
+        <div class="col py-3">
+          <router-view />
+        </div>
+      </div>
+    </div>
+  </template>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import NavBar from "@/components/NavBar";
+import SideBar from "@/components/SideBar";
 
 export default {
   name: "App",
   components: {
     NavBar,
+    SideBar
   },
   computed: {
     ...mapGetters("Auth", ["isAuthorized"]),
