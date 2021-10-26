@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^30.0.0",
+    "@ckeditor/ckeditor5-ckfinder": "^31.0.0",
+    "@ckeditor/ckeditor5-image": "^31.0.0",
     "@ckeditor/ckeditor5-vue": "^2.0.1",
     "@popperjs/core": "^2.10.2",
     "axios": "^0.23.0",
