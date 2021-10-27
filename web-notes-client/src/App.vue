@@ -5,14 +5,18 @@
     <router-view />
   </template>
   <template v-else>
-     <NavBar />
-    <div class="container-fluid">
-      <div class="row flex-nowrap">
-        <div class="col-md-3 py-3">
-        <SideBar />
+    <div class="container-fluid p-0 m-0 min-vh-100 d-flex flex-column">
+      <div class="row p-0 m-0">
+        <div class="col p-0 m-0">
+          <NavBar />
+        </div>
+      </div>
+      <div class="row flex-grow-1 p-0 m-0">
+        <div class="col-md-2  p-0 m-0">
+          <SideBar />
         </div>
 
-        <div class="col py-3">
+        <div class="col p-0 m-0">
           <router-view />
         </div>
       </div>
@@ -39,27 +43,11 @@ export default {
   },
 };
 </script>
+
 <style>
-/* html,body, #app {
+html,
+body,
+#app {
   height: 100%;
-} */
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>

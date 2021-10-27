@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebNotesData.Entities
 {
@@ -13,5 +14,7 @@ namespace WebNotesData.Entities
 
         [JsonIgnore]
         public string PasswordHash { get; set; }
+
+        public List<Note> Notes { get; set; }
     }
 }

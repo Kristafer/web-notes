@@ -53,7 +53,9 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch("Auth/login", this.loginModel);
+      this.$store.dispatch("Auth/login", this.loginModel).then(() => {
+        this.$router.push("/");
+      });
     },
   },
 };
