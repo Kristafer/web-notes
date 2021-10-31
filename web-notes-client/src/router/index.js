@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Notes from "../views/Notes.vue";
+import CreateNote from "../views/CreateNote.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/notes",
     name: "Notes",
     component: Notes,
+  },
+  {
+    path: "/createnote",
+    name: "CreateNote",
+    component: CreateNote,
   },
 ];
 

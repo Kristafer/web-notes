@@ -1,6 +1,6 @@
 <template>
-    <div class="row p-0 m-0">
-        <div class="col-md-2 bg-">
+    <div class="row p-0 m-0 h-100">
+        <div class="col-md-3 bg-info">
             Test
         </div>
         <div class="col">

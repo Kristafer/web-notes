@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebNotesApplication.Authorization;
 using WebNotesApplication.Exceptions;
 using WebNotesApplication.Models;
@@ -32,9 +34,9 @@ namespace WebNotesApplication.Services
         }
 
 
-        public AuthenticateResult Authenticate(LoginModel model)
+        public async Task<AuthenticateResult> AuthenticateAsync(LoginModel model)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Username == model.Username);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == model.Username);
 
             // validate
             if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
@@ -51,14 +53,14 @@ namespace WebNotesApplication.Services
             return authResult;
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _context.Users;
+            return await _context.Users.ToListAsync();
         }
 
-        public User GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            var user = _context.Users.Find(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 throw new KeyNotFoundException("User not found");
@@ -67,9 +69,9 @@ namespace WebNotesApplication.Services
             return user;
         }
 
-        public AuthenticateResult Register(User user)
+        public async Task<AuthenticateResult> RegisterAsync(User user)
         {
-            var existUser = _context.Users.SingleOrDefault(x => x.Username == user.Username);
+            var existUser = await _context.Users.SingleOrDefaultAsync(x => x.Username == user.Username);
             if(existUser is not null)
             {
                 throw new AppException($"User with user name {user.Username} exists");

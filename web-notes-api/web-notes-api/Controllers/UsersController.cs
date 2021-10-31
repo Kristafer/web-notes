@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WebNotesApi.Authorization;
 using WebNotesApi.Models.Users;
 using WebNotesApplication.Models;
@@ -10,7 +11,7 @@ namespace WebNotesApi.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
@@ -24,30 +25,30 @@ namespace WebNotesApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
-            var response = _userService.Authenticate(_mapper.Map<LoginModel>(model));
+            var response = await _userService.AuthenticateAsync(_mapper.Map<LoginModel>(model));
             return Ok(response);
         }
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Register(RegisterRequest model)
+        public async Task<IActionResult> Register(RegisterRequest model)
         {
-            var response = _userService.Register(_mapper.Map<User>(model));
+            var response = await _userService.RegisterAsync(_mapper.Map<User>(model));
             return Ok(response);
         }
 
         [Authorize(Role.Admin)]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userService.GetAll();
+            var users = await _userService.GetAllAsync();
             return Ok(users);
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             // only admins can access other user records
             var currentUser = (User)HttpContext.Items["User"];
@@ -56,7 +57,7 @@ namespace WebNotesApi.Controllers
                 return Unauthorized(new { message = "Unauthorized" });
             }
 
-            var user = _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             return Ok(user);
         }
     }

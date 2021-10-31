@@ -26,7 +26,7 @@ namespace WebNotesApi.Authorization
             if (userId != null)
             {
                 // attach user to context on successful jwt validation
-                context.Items["User"] = userService.GetById(userId.Value);
+                context.Items["User"] = userService.GetByIdAsync(userId.Value);
             }
 
             await _next(context);

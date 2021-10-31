@@ -6,9 +6,9 @@ namespace WebNotesApplication.Services
 {
     public interface IUserService
     {
-        AuthenticateResult Authenticate(LoginModel model);
-        AuthenticateResult Register(User model);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
+        AuthenticateResult AuthenticateAsync(LoginModel model);
+        AuthenticateResult RegisterAsync(User model);
+        IEnumerable<User> GetAllAsync();
+        User GetByIdAsync(int id);
     }
 }
