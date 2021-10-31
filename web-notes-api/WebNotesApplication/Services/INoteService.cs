@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebNotesApplication.Models;
+using WebNotesData.Entities;
 
 namespace WebNotesApplication.Services
 {
-    class INoteService
+    public interface INoteService
     {
+
+        Task<Note> GetNote(SearchNoteModel searchNoteModel);
+        Task<List<Note>> GetNotes(SearchNoteModel searchNoteModel);
+        Task<Note> CreateNoteAsync(CreateNoteModel createNoteModel);
+        Task<Note> UpdateNoteAsync(UpdateNoteModel createNoteModel);
     }
 }

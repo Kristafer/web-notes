@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebNotesApi.Authorization;
+using WebNotesApi.Models.Notes;
 using WebNotesApplication.Services;
 using WebNotesData.Entities;
 
@@ -22,10 +23,10 @@ namespace WebNotesApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("[action]")]
-        public Task<IActionResult> Get(AuthenticateRequest model)
+        [HttpGet("[action]/{id:int}")]
+        public Task<IActionResult<NoteResponse>> Get(int id)
         {
-            var response = _userService.Authenticate(_mapper.Map<LoginModel>(model));
+            var response = _noteService.Get(_mapper.Map<LoginModel>(model));
             return Ok(response);
         }
 
