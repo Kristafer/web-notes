@@ -11,6 +11,6 @@ namespace WebNotesApplication.Services
         Task<Note> GetNote(SearchNoteModel searchNoteModel);
         Task<List<Note>> GetNotes(SearchNoteModel searchNoteModel);
         Task<Note> CreateNoteAsync(CreateNoteModel createNoteModel);
-        Task<Note> UpdateNoteAsync(UpdateNoteModel createNoteModel);
+        Task<Note> UpdateNoteAsync(UpdateNoteModel updateNoteModel);
     }
 }

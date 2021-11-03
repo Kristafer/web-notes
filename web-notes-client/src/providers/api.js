@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiProvider = axios.create({
-    baseURL: "https://localhost:44325/",
+    baseURL: "https://localhost:44325/api/",
     // params: {
     //   timestamp: new Date().getTime(),
     // },

@@ -8,5 +8,7 @@ namespace WebNotesApplication.Models
 {
     public class SearchNoteModel
     {
+        public int Id { get; set; }
+
     }
 }

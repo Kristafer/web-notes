@@ -1,10 +1,15 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebNotesApi.Authorization;
 using WebNotesApi.Models.Notes;
+using WebNotesApi.Models.Users;
+using WebNotesApplication.Models;
 using WebNotesApplication.Services;
 using WebNotesData.Entities;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace WebNotesApi.Controllers
 {
@@ -22,28 +27,51 @@ namespace WebNotesApi.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         [HttpGet("[action]/{id:int}")]
-        public Task<IActionResult<NoteResponse>> Get(int id)
+        public async Task<ActionResult<NoteResponse>> GetNote(int id)
         {
-            var response = _noteService.Get(_mapper.Map<LoginModel>(model));
-            return Ok(response);
+            var response = await _noteService.GetNote(new SearchNoteModel()
+            {
+                Id = id
+            });
+
+            return _mapper.Map<NoteResponse>(response);
         }
 
-        [AllowAnonymous]
-        [HttpPost("[action]")]
-        public Task<IActionResult> Authenticate(AuthenticateRequest model)
+        [HttpGet("[action]")]
+        public async Task<ActionResult<List<NoteResponse>>> GetNotes([FromQuery]SearchNoteModel searchNoteModel)
         {
-            var response = _userService.Authenticate(_mapper.Map<LoginModel>(model));
-            return Ok(response);
+            var response = await _noteService.GetNotes(searchNoteModel);
+
+            return _mapper.Map<List<NoteResponse>>(response);
         }
 
-        [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Register(RegisterRequest model)
+        public async Task<ActionResult<NoteResponse>> CreateNote(CreateNoteRequest request)
         {
-            var response = _userService.Register(_mapper.Map<User>(model));
-            return Ok(response);
+            var response = await _noteService.CreateNoteAsync(_mapper.Map<CreateNoteModel>(request));
+
+            return _mapper.Map<NoteResponse>(response);
         }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<NoteResponse>> UpdateNote(UpdateNoteRequest request)
+        {
+            var response = await _noteService.UpdateNoteAsync(_mapper.Map<UpdateNoteModel>(request));
+
+            return _mapper.Map<NoteResponse>(response);
+        }
+
+        //[AllowAnonymous]
+        //[HttpGet("[action]/{id}")]
+        //public async Task<ActionResult<NoteResponse>> GetNoteShared(Guid id)
+        //{
+        //    var response = await _noteService.GetNote(new SearchNoteModel()
+        //    {
+        //        Id = id
+        //    });
+
+        //    return _mapper.Map<NoteResponse>(response);
+        //}
     }
 }

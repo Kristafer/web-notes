@@ -17,6 +17,8 @@ namespace WebNotesApi.Profiles
             CreateMap<RegisterRequest, User>()
                  .ForMember(user => user.PasswordHash, opt => opt.MapFrom(request => BCryptNet.HashPassword(request.Password, SaltRevision.Revision2B)))
                  .ForMember(user => user.Role, opt => opt.MapFrom(request => Role.User));
+
+            //TODO add profile to create, update, search model
         }
     }
 }
