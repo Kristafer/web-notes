@@ -8,8 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^31.0.0",
-    "@ckeditor/ckeditor5-vue": "^2.0.1",
     "@popperjs/core": "^2.10.2",
     "@vueform/multiselect": "^2.2.0",
     "axios": "^0.23.0",
@@ -47,7 +45,7 @@
     ],
     "parserOptions": {
       "parser": "babel-eslint",
-      "ecmaVersion": 6 
+      "ecmaVersion": 6
     },
     "rules": {}
   },

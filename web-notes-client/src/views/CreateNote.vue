@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import NoteForm from "@/components/NoteForm.vue"
+import NoteForm from "@/components/NoteForm.vue";
 export default {
     name: "CreateNote",
     components:{

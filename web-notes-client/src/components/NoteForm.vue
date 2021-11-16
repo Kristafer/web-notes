@@ -28,12 +28,13 @@
       />
     </div>
     <div class="form-group pb-1">
-      <ckeditor
+      <!-- <ckeditor
         :editor="editor"
         v-model="noteModel.noteDocument"
         :config="editorConfig"
       >
-      </ckeditor>
+      </ckeditor> -->
+      <div id="editor">This is some sample content.</div>
     </div>
     <div class="pt-2 text-center">
       <button type="submit" class="btn btn-primary">Создать</button>
@@ -43,14 +44,14 @@
 </template>
 
 <script>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Multiselect from "@vueform/multiselect";
 
 export default {
   name: "NoteForm",
-  props:{
+  props: {
     isNew: Boolean,
-    noteId: Number 
+    noteId: Number,
   },
   components: {
     Multiselect,
@@ -62,19 +63,34 @@ export default {
         categories: [],
         noteDocument: "",
       },
-      editor: ClassicEditor,
-      editorData: "",
-      editorConfig: {
-        height: 500,
-        toolbar: {
-         removeItems: ["uploadImage"],
-        },
-      },
+      // editor: ClassicEditor,
+      // editorData: "",
+      // editorConfig: {
+      //   language: "de",
+      //   height: 500,
+      //   toolbar: {
+      //     removeItems: ["uploadImage"],
+      //   },
+      // },
       options: ["Batman", "Robin", "Joker"],
     };
   },
 
-  created() {
+  mounted() {
+    ClassicEditor.create(document.querySelector("#editor"), {
+      licenseKey: "",
+    })
+      .then((editor) => {
+        window.editor = editor;
+      })
+      .catch((error) => {
+        console.error("Oops, something went wrong!");
+        console.error(
+          "Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:"
+        );
+        console.warn("Build id: qrazqcvdbgrw-9tyw1m90kmcf");
+        console.error(error);
+      });
   },
 };
 </script>
