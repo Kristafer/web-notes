@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using WebNotesData.Entities;
 
 namespace WebNotesApi.Authorization
@@ -28,8 +29,8 @@ namespace WebNotesApi.Authorization
             }
 
             // authorization
-            var user = (User)context.HttpContext.Items["User"];
-            if (user == null || (_roles.Any() && !_roles.Contains(user.Role)))
+            var roles = context.HttpContext.User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.Role);
+            if (_roles.Any() && !_roles.Contains((Role)int.Parse(roles.Value)))
             {
                 // not logged in or role not authorized
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };

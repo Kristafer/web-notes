@@ -1,110 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="WebNotesApi.Authorization.AllowAnonymousAttribute">
-    <Position X="9.25" Y="4" Width="2.25" />
+  <Class Name="WebNotesData.Context.ApplicationContext">
+    <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Authorization\AllowAnonymousAttribute.cs</FileName>
+      <HashCode>AAAgACAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAABAAAAA=</HashCode>
+      <FileName>Context\ApplicationContext.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Authorization.AuthorizeAttribute" BaseTypeListCollapsed="true">
-    <Position X="10.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
-      <FileName>Authorization\AuthorizeAttribute.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="WebNotesApi.Authorization.JwtMiddleware">
-    <Position X="7.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAgAAAAABAAAAA=</HashCode>
-      <FileName>Authorization\JwtMiddleware.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebNotesApi.Controllers.NotesController">
-    <Position X="0.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAgAAEBAAEAEAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controllers\NotesController.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebNotesApi.Controllers.UsersController">
-    <Position X="7.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABAAIAAAABAAAAAgAEAAAAAIA=</HashCode>
-      <FileName>Controllers\UsersController.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebNotesApi.Helpers.ErrorHandlerMiddleware">
-    <Position X="0.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
-      <FileName>Helpers\ErrorHandlerMiddleware.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebNotesApi.Models.Notes.CreateNoteRequest">
+  <Class Name="WebNotesData.Entities.Note">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgEAAAAAAAAgAAAAAAMAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Notes\CreateNoteRequest.cs</FileName>
+      <HashCode>AAADAAAAAAAAgEAAAAAAAAgEAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Note.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Models.Notes.NoteResponse">
-    <Position X="2.25" Y="2.5" Width="1.5" />
+  <Class Name="WebNotesData.Entities.NoteTag">
+    <Position X="3.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAgEAAAAAAAAgAAAAAAMAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Notes\NoteResponse.cs</FileName>
+      <HashCode>AAACAAAAAAAgAAAAAAAAAAAAACAAAAAAAAAAAAEAAAE=</HashCode>
+      <FileName>Entities\NoteTag.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Models.Notes.UpdateNoteRequest">
-    <Position X="5.75" Y="3" Width="1.5" />
+  <Class Name="WebNotesData.Entities.Tag">
+    <Position X="6.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAgEAAAAAAAAgAAAAAAMAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Notes\UpdateNoteRequest.cs</FileName>
+      <HashCode>AAADAAAAAAAAAAAAAAAAAAgEAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Tag.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Models.Users.AuthenticateRequest">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Class Name="WebNotesData.Entities.User">
+    <Position X="5.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Users\AuthenticateRequest.cs</FileName>
+      <HashCode>AACiAEAAACAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Models.Users.AuthenticateResponse">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+  <Class Name="WebNotesData.Migrations.Init">
+    <Position X="9.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAACAAAAAAEQAAAAAAAAAAAAAAAAAAAAABAAg=</HashCode>
-      <FileName>Models\Users\AuthenticateResponse.cs</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20211023151221_Init.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Models.Users.RegisterRequest">
-    <Position X="9" Y="0.5" Width="1.5" />
+  <Class Name="WebNotesData.Migrations.UpdateUserModel">
+    <Position X="2.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAACAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAg=</HashCode>
-      <FileName>Models\Users\RegisterRequest.cs</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20211024100735_UpdateUserModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebNotesApi.Profiles.MappingProfile">
-    <Position X="9" Y="2.75" Width="1.5" />
+  <Class Name="WebNotesData.Migrations.AddNotesAndTags">
+    <Position X="8.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Profiles\MappingProfile.cs</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20211027092954_AddNotesAndTags.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="web_notes_api.Program">
-    <Position X="10.5" Y="2.5" Width="1.5" />
+  <Class Name="WebNotesData.Migrations.UpdateNoteRequired">
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
-      <FileName>Program.cs</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20211027114611_UpdateNoteRequired.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="web_notes_api.Startup">
-    <Position X="4" Y="2" Width="1.5" />
+  <Class Name="WebNotesData.Migrations.ApplicationContextModelSnapshot">
+    <Position X="5.25" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAAAAABAAAAAAAAAAAAAgAAACAAAAAA=</HashCode>
-      <FileName>Startup.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Migrations\ApplicationContextModelSnapshot.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Enum Name="WebNotesData.Entities.Role">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Role.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

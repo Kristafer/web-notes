@@ -16,7 +16,7 @@
           <SideBar />
         </div>
 
-        <div class="col p-0 m-0">
+        <div class="col-md-10  p-0 m-0">
           <router-view />
         </div>
       </div>

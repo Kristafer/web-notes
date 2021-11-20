@@ -36,7 +36,7 @@ namespace WebNotesApplication.Services
 
         public async Task<AuthenticateResult> AuthenticateAsync(LoginModel model)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == model.Username);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == model.Username);
 
             // validate
             if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
@@ -71,10 +71,10 @@ namespace WebNotesApplication.Services
 
         public async Task<AuthenticateResult> RegisterAsync(User user)
         {
-            var existUser = await _context.Users.SingleOrDefaultAsync(x => x.Username == user.Username);
+            var existUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == user.UserName);
             if(existUser is not null)
             {
-                throw new AppException($"User with user name {user.Username} exists");
+                throw new AppException($"User with user name {user.UserName} exists");
             }
 
             _context.Users.Add(user);

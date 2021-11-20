@@ -9,6 +9,7 @@ namespace WebNotesData.Context
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<NoteTag> NoteTags { get; set; }
+        public DbSet<ShareNote> ShareNotes { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
         {

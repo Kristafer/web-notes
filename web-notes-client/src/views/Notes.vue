@@ -3,7 +3,7 @@
         <div class="col-md-3 bg-info">
             Test
         </div>
-        <div class="col">
+        <div class="col-md-9">
             <NoteForm/>
         </div>
     </div>

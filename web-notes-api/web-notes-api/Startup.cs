@@ -7,7 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using WebNotesApi.Authorization;
 using WebNotesApi.Helpers;
 using WebNotesApplication;
@@ -33,7 +36,7 @@ namespace web_notes_api
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connection));
+                options.UseSqlServer(connection), ServiceLifetime.Transient);
             services.AddAutoMapper(typeof(Startup));
             services.AddCors();
             services.AddControllers().AddJsonOptions(x =>
@@ -48,6 +51,7 @@ namespace web_notes_api
             // configure DI for application services
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<INoteService, NoteService>();
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo { Title = "My Api", Version = "v1" });
@@ -59,6 +63,25 @@ namespace web_notes_api
                     Scheme = "bearer"
                 });
             });
+
+            var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:secret").Value);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +99,7 @@ namespace web_notes_api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
@@ -102,8 +126,8 @@ namespace web_notes_api
             // add hardcoded test users to db on startup
             var testUsers = new List<User>
             {
-                new User {  FirstName = "Admin", LastName = "User", Username = "admin", PasswordHash = BCryptNet.HashPassword("admin"), Role = Role.Admin },
-                new User {  FirstName = "Normal", LastName = "User", Username = "user", PasswordHash = BCryptNet.HashPassword("user"), Role = Role.User }
+                new User {  FirstName = "Admin", LastName = "User", UserName = "admin", PasswordHash = BCryptNet.HashPassword("admin"), Role = Role.Admin },
+                new User {  FirstName = "Normal", LastName = "User", UserName = "user", PasswordHash = BCryptNet.HashPassword("user"), Role = Role.User }
             };
             context.Users.AddRange(testUsers);
             context.SaveChanges();

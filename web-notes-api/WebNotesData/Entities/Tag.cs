@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace WebNotesData.Entities
 
         [Required]
         public string Value { get; set; }
+
+        public User? User { get; set; }
+
+        public int? UserId { get; set; }
 
         public List<NoteTag> NoteTags { get; set; }
     }

@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using BCrypt.Net;
+using WebNotesApi.Models.Notes;
 using WebNotesApi.Models.Users;
 using WebNotesApplication.Models;
 using WebNotesData.Entities;
@@ -11,12 +13,18 @@ namespace WebNotesApi.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<User, AuthenticateResult>();
+            CreateMap<User, AuthenticateResult>().ReverseMap();
             CreateMap<AuthenticateResponse, AuthenticateResult>().ReverseMap();
             CreateMap<AuthenticateRequest, LoginModel>().ReverseMap();
             CreateMap<RegisterRequest, User>()
                  .ForMember(user => user.PasswordHash, opt => opt.MapFrom(request => BCryptNet.HashPassword(request.Password, SaltRevision.Revision2B)))
                  .ForMember(user => user.Role, opt => opt.MapFrom(request => Role.User));
+
+            CreateMap<CreateNoteModel, Note>();
+            CreateMap<CreateNoteRequest, CreateNoteModel>();
+            CreateMap<UpdateNoteRequest, UpdateNoteModel>();
+            CreateMap<UpdateNoteModel, Note>();
+            CreateMap<Note, NoteResponse>().ForMember(x=>x.NoteTags, c=>c.MapFrom(t=>t.NoteTags.Select(x=>x.Tag.Value)));
 
             //TODO add profile to create, update, search model
         }

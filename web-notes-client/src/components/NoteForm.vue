@@ -1,79 +1,77 @@
 <template>
-  <h3 class="text-center">Заметка</h3>
-  <hr />
-  <form @submit.prevent="">
-    <div class="form-group pb-1">
-      <label for="title" class="form-label">Название</label>
-      <input
-        class="form-control"
-        type="text"
-        id="title"
-        v-model="noteModel.title"
-      />
-    </div>
-    <div class="pb-1">
-      <label for="categories" class="form-label">Категории</label>
-      <Multiselect
-        id="categories"
-        v-model="noteModel.categories"
-        mode="tags"
-        :closeOnSelect="false"
-        :searchable="true"
-        :createTag="true"
-        :options="[
-          { value: 'batman', label: 'Batman' },
-          { value: 'robin', label: 'Robin' },
-          { value: 'joker', label: 'Joker' },
-        ]"
-      />
-    </div>
-    <div class="form-group pb-1">
-      <!-- <ckeditor
-        :editor="editor"
-        v-model="noteModel.noteDocument"
-        :config="editorConfig"
-      >
-      </ckeditor> -->
-      <div id="editor">This is some sample content.</div>
-    </div>
-    <div class="pt-2 text-center">
-      <button type="submit" class="btn btn-primary">Создать</button>
-    </div>
-    <hr />
-  </form>
+  <div class="form-group pb-2">
+    <!-- <label for="title" class="form-label">Название</label> -->
+    <input
+      class="form-control"
+      type="text"
+      id="title"
+      v-model="noteModel.title"
+      placeholder="Название"
+    />
+  </div>
+  <div class="form-group pb-2">
+    <Multiselect
+      id="noteTags"
+      v-model="noteModel.noteTags"
+      mode="tags"
+      placeholder="Категории"
+      :closeOnSelect="false"
+      :searchable="true"
+      :createTag="true"
+      :options="[
+        { value: 'кино', label: 'кино' },
+        { value: 'музыка', label: 'музыка' },
+        { value: 'работа', label: 'работа' },
+      ]"
+    />
+  </div>
+  <div class="form-group pb-1">
+    <div id="editor">{{noteModel.noteDocument}}</div>
+  </div>
+
+  <div class="d-md-flex justify-content-md-end py-2">
+    <template v-if="isNew">
+      <button class="btn btn-primary" v-on:click="onCreateNote()">
+        Создать
+      </button>
+    </template>
+    <template v-else>
+      <button class="btn btn-danger me-md-2">Удалить</button>
+      <button class="btn btn-primary">Обновить</button>
+    </template>
+  </div>
 </template>
 
 <script>
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Multiselect from "@vueform/multiselect";
+import { createNote } from "../providers/noteService.js";
 
 export default {
   name: "NoteForm",
   props: {
     isNew: Boolean,
-    noteId: Number,
+    note: Object,
   },
+  emits: ["create"],
   components: {
     Multiselect,
   },
   data() {
     return {
+      editor: null,
       noteModel: {
         title: "",
-        categories: [],
-        noteDocument: "",
+        noteTags: [],
+        noteDocument: ""
       },
-      // editor: ClassicEditor,
-      // editorData: "",
-      // editorConfig: {
-      //   language: "de",
-      //   height: 500,
-      //   toolbar: {
-      //     removeItems: ["uploadImage"],
-      //   },
-      // },
       options: ["Batman", "Robin", "Joker"],
     };
+  },
+
+  created(){
+    if(this.note){
+    this.noteModel = {...this.note};
+    }
   },
 
   mounted() {
@@ -92,11 +90,21 @@ export default {
         console.error(error);
       });
   },
+
+  methods: {
+    onCreateNote() {
+      this.$emit("create", {
+        title: this.noteModel.title,
+        noteTags: this.noteModel.noteTags,
+        noteDocument:  window.editor.getData()
+      });
+    },
+  },
 };
 </script>
 
 <style>
 .ck-editor__editable {
-  height: 300px;
+  height: 440px;
 }
 </style>

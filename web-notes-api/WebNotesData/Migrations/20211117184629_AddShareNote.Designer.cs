@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNotesData.Context;
 
 namespace WebNotesData.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211117184629_AddShareNote")]
+    partial class AddShareNote
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,14 +31,11 @@ namespace WebNotesData.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsBookmark")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NoteDocument")
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<string>("Title")
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -80,19 +79,14 @@ namespace WebNotesData.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("InactivatedDateTime")
+                    b.Property<DateTime>("InactivateDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Link")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NoteId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("NoteId");
 
                     b.ToTable("ShareNotes");
                 });
@@ -140,7 +134,7 @@ namespace WebNotesData.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -176,17 +170,6 @@ namespace WebNotesData.Migrations
                     b.Navigation("Note");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("WebNotesData.Entities.ShareNote", b =>
-                {
-                    b.HasOne("WebNotesData.Entities.Note", "Note")
-                        .WithMany()
-                        .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Note");
                 });
 
             modelBuilder.Entity("WebNotesData.Entities.Tag", b =>

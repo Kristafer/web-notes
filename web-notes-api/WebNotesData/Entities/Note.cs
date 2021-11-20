@@ -9,10 +9,10 @@ namespace WebNotesData.Entities
     {
         public int Id { get; set; }
 
-        [Column(TypeName = "NVARCHAR")]
+        [Column(TypeName = "NVARCHAR(MAX)")]
         public string Title { get; set; }
 
-        [Column(TypeName = "NVARCHAR")]
+        [Column(TypeName = "NVARCHAR(MAX)")]
         [MaxLength]
         public string NoteDocument { get; set; }
 
@@ -24,5 +24,7 @@ namespace WebNotesData.Entities
         public User User { get; set; }
 
         public List<NoteTag> NoteTags { get; set; }
+
+        public bool IsBookmark { get; set; }
     }
 }

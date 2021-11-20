@@ -51,7 +51,9 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("Auth/logout");
+      this.$store.dispatch("Auth/logout").then(()=>{
+        this.$router.push('Home');
+      });
     },
   },
 };

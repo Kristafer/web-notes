@@ -28,6 +28,7 @@ namespace WebNotesApi.Controllers
         public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
             var response = await _userService.AuthenticateAsync(_mapper.Map<LoginModel>(model));
+            HttpContext.Items["User"] = _mapper.Map<User>(response);
             return Ok(response);
         }
 
