@@ -18,6 +18,13 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/">Главная</router-link>
           </li>
+          <li class="nav-item" v-if="isAuthorized">
+            <router-link class="nav-link" to="/notes">Заметки</router-link>
+          </li>
+          
+          <li class="nav-item" v-if="isAdmin">
+            <router-link class="nav-link" to="/users">Пользователи</router-link>
+          </li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <template v-if="isAuthorized">
@@ -47,7 +54,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "NavBar",
   computed: {
-    ...mapGetters("Auth", ["isAuthorized"]),
+    ...mapGetters("Auth", ["isAuthorized", "isAdmin"]),
   },
   methods: {
     logout() {

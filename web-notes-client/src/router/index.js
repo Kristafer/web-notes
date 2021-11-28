@@ -4,6 +4,8 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Notes from "../views/Notes.vue";
 import CreateNote from "../views/CreateNote.vue";
+import Users from "../views/Users.vue";
+import Store from "../store/index.js";
 
 const routes = [
   {
@@ -25,17 +27,31 @@ const routes = [
     path: "/notes",
     name: "Notes",
     component: Notes,
+    meta: { requiresAuth: true },
   },
   {
     path: "/createnote",
     name: "CreateNote",
     component: CreateNote,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
+    meta: { requiresAuth: true },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !Store.getters["Auth/isAuthorized"])
+    next({ name: "Login" });
+  else next();
 });
 
 export default router;

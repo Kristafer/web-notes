@@ -38,7 +38,14 @@ namespace WebNotesApplication.Services
 
         public async Task<List<Note>> GetNotes(SearchNoteModel searchNoteModel)
         {
-            var notes = await _context.Notes.AsNoTracking().Include(x => x.NoteTags).ThenInclude(x => x.Tag).Where(n => n.Id == searchNoteModel.Id).ToListAsync();
+            var notes = await _context.Notes.AsNoTracking()
+                .Include(x => x.NoteTags).ThenInclude(x => x.Tag)
+                .Where(x =>
+                    string.IsNullOrEmpty(searchNoteModel.SearchValue) ||
+                    x.NoteDocument.Contains(searchNoteModel.SearchValue) ||
+                    x.Title.Contains(searchNoteModel.SearchValue) ||
+                    x.NoteTags.Any(n => n.Tag.Value.Contains(searchNoteModel.SearchValue)))
+                .ToListAsync();
             if (!notes.Any())
             {
                 throw new AppException($"Notes with search criteria not founded");
@@ -51,10 +58,10 @@ namespace WebNotesApplication.Services
         {
             var note = _mapper.Map<Note>(createNoteModel);
             note.CreatedDateTime = DateTime.Now;
-            _context.Notes.Add(note);
+            await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
-            await CreateOrUpdateTags(note.Id, createNoteModel.Tags);
-            // TODO Add Tags create and update
+            await CreateOrUpdateTags(note.Id, createNoteModel.NoteTags);
+            // TODO Add NoteTags create and update
 
             return await GetNoteFull(note.Id);// include extend table
         }
@@ -62,21 +69,29 @@ namespace WebNotesApplication.Services
 
         public async Task<Note> UpdateNoteAsync(UpdateNoteModel updateNoteModel)
         {
-            var note = await _context.Notes.AsNoTracking().SingleOrDefaultAsync(n => n.Id == updateNoteModel.Id);
+            var note = await _context.Notes.SingleOrDefaultAsync(n => n.Id == updateNoteModel.Id);
             note.NoteDocument = updateNoteModel.NoteDocument;
             note.Title = updateNoteModel.Title;
 
-            // TODO Add Tags create and update
+            // TODO Add NoteTags create and update
             _context.Notes.Update(note);
             await _context.SaveChangesAsync();
-            await CreateOrUpdateTags(note.Id, updateNoteModel.Tags);
+            await CreateOrUpdateTags(note.Id, updateNoteModel.NoteTags);
 
             return await GetNoteFull(note.Id);// include extend table
         }
 
+        public async Task DeleteNoteAsync(int id)
+        {
+            var note = await _context.Notes.SingleOrDefaultAsync(n => n.Id == id);
+            _context.Notes.Remove(note);
+
+            await _context.SaveChangesAsync();
+        }
+
         private async Task CreateOrUpdateTags(int noteId, List<string> tags)
         {
-            var existedNoteTags = await _context.NoteTags.AsNoTracking().Where(t => t.NoteId == noteId).ToListAsync();
+            var existedNoteTags = await _context.NoteTags.AsNoTracking().Include(x=>x.Tag).Where(t => t.NoteId == noteId).ToListAsync();
 
             var removeNoteTags = existedNoteTags.Where(t => !tags.Contains(t.Tag.Value));
             var addTags = tags.Where(t => existedNoteTags.All(nt => nt.Tag.Value != t)).ToList();

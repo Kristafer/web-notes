@@ -19,12 +19,13 @@ namespace WebNotesApi.Profiles
             CreateMap<RegisterRequest, User>()
                  .ForMember(user => user.PasswordHash, opt => opt.MapFrom(request => BCryptNet.HashPassword(request.Password, SaltRevision.Revision2B)))
                  .ForMember(user => user.Role, opt => opt.MapFrom(request => Role.User));
-
-            CreateMap<CreateNoteModel, Note>();
+            CreateMap<CreateNoteModel, Note>()
+                .ForMember(x => x.NoteTags, m => m.Ignore());
             CreateMap<CreateNoteRequest, CreateNoteModel>();
             CreateMap<UpdateNoteRequest, UpdateNoteModel>();
-            CreateMap<UpdateNoteModel, Note>();
-            CreateMap<Note, NoteResponse>().ForMember(x=>x.NoteTags, c=>c.MapFrom(t=>t.NoteTags.Select(x=>x.Tag.Value)));
+            CreateMap<UpdateNoteModel, Note>()
+                .ForMember(x => x.NoteTags, m => m.Ignore());
+            CreateMap<Note, NoteResponse>().ForMember(x => x.NoteTags, c => c.MapFrom(t => t.NoteTags.Select(x => x.Tag.Value)));
 
             //TODO add profile to create, update, search model
         }

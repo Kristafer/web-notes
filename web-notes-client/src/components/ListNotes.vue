@@ -1,6 +1,8 @@
 <template>
-  <div class="h-100 overflow-auto">
-    <ListCardNote :note="note" :v-for="note in notes"></ListCardNote>
+  <div class="p-2">
+    <div v-for="note in notes" :key="note.id">
+    <ListCardNote :note="note"  @openNote="onOpenNote"></ListCardNote>
+    </div>
   </div>
 </template>
 
@@ -14,5 +16,11 @@ export default {
   props: {
     notes: Array,
   },
+  emits: ["openNote"],
+  methods:{
+    onOpenNote(id){
+      this.$emit("openNote", id);
+    }
+  }
 };
 </script>

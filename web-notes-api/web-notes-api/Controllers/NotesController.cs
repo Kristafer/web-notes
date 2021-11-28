@@ -18,7 +18,7 @@ namespace WebNotesApi.Controllers
     [Route("api/[controller]")]
     public class NotesController
     {
-        private INoteService _noteService;
+        private readonly INoteService _noteService;
         private readonly IMapper _mapper;
 
         public NotesController(INoteService noteService, IMapper mapper)
@@ -39,7 +39,7 @@ namespace WebNotesApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<List<NoteResponse>>> GetNotes([FromQuery]SearchNoteModel searchNoteModel)
+        public async Task<ActionResult<List<NoteResponse>>> GetNotes([FromQuery] SearchNoteModel searchNoteModel)
         {
             var response = await _noteService.GetNotes(searchNoteModel);
 
@@ -62,16 +62,24 @@ namespace WebNotesApi.Controllers
             return _mapper.Map<NoteResponse>(response);
         }
 
-        //[AllowAnonymous]
-        //[HttpGet("[action]/{id}")]
-        //public async Task<ActionResult<NoteResponse>> GetNoteShared(Guid id)
-        //{
-        //    var response = await _noteService.GetNote(new SearchNoteModel()
-        //    {
-        //        Id = id
-        //    });
+        [HttpDelete("[action]/{id:int}")]
+        public async Task<ActionResult> DeleteNote(int id)
+        {
+             await _noteService.DeleteNoteAsync(id);
 
-        //    return _mapper.Map<NoteResponse>(response);
-        //}
+            return new OkResult();
+        }
+
+        // [AllowAnonymous]
+        // [HttpGet("[action]/{id}")]
+        // public async Task<ActionResult<NoteResponse>> GetNoteShared(Guid id)
+        // {
+        //     var response = await _noteService.GetNote(new SearchNoteModel()
+        //     {
+        //         Id = id
+        //     });
+        //
+        //     return _mapper.Map<NoteResponse>(response);
+        // }
     }
 }

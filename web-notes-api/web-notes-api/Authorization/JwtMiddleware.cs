@@ -11,12 +11,12 @@ namespace WebNotesApi.Authorization
     public class JwtMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly AppSettings _appSettings;
+        private readonly IOptions<AppSettings> _appSettings;
 
         public JwtMiddleware(RequestDelegate next, IOptions<AppSettings> appSettings)
         {
             _next = next;
-            _appSettings = appSettings.Value;
+            _appSettings = appSettings;
         }
 
         public async Task Invoke(HttpContext context, IUserService userService, IJwtUtils jwtUtils)

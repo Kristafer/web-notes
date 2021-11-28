@@ -1,5 +1,5 @@
 <template>
-  <div class="form-group pb-2">
+  <div class="form-group pt-3 pb-2">
     <!-- <label for="title" class="form-label">Название</label> -->
     <input
       class="form-control"
@@ -26,19 +26,23 @@
     />
   </div>
   <div class="form-group pb-1">
-    <div id="editor">{{noteModel.noteDocument}}</div>
+    <div id="editor">{{ noteModel.noteDocument }}</div>
   </div>
 
   <div class="d-md-flex justify-content-md-end py-2">
-    <template v-if="isNew">
+    <div v-if="isNew">
       <button class="btn btn-primary" v-on:click="onCreateNote()">
         Создать
       </button>
-    </template>
-    <template v-else>
-      <button class="btn btn-danger me-md-2">Удалить</button>
-      <button class="btn btn-primary">Обновить</button>
-    </template>
+    </div>
+    <div v-else>
+      <button class="btn btn-danger me-md-2" v-on:click="onDeleteNote()">
+        Удалить
+      </button>
+      <button class="btn btn-primary" v-on:click="onUpdateNote()">
+        Обновить
+      </button>
+    </div>
   </div>
 </template>
 
@@ -62,16 +66,19 @@ export default {
       noteModel: {
         title: "",
         noteTags: [],
-        noteDocument: ""
+        noteDocument: "",
       },
       options: ["Batman", "Robin", "Joker"],
     };
   },
 
-  created(){
-    if(this.note){
-    this.noteModel = {...this.note};
-    }
+  watch: {
+    note() {
+      if (this.note) {
+        this.noteModel = { ...this.note };
+        window.editor.setData(this.noteModel.noteDocument);
+      }
+    },
   },
 
   mounted() {
@@ -94,10 +101,24 @@ export default {
   methods: {
     onCreateNote() {
       this.$emit("create", {
+        ...this.note,
         title: this.noteModel.title,
         noteTags: this.noteModel.noteTags,
-        noteDocument:  window.editor.getData()
-      });
+        noteDocument: window.editor.getData(),
+      })
+    },
+    onUpdateNote() {
+      this.$emit("update", {
+        ...this.note,
+        title: this.noteModel.title,
+        noteTags: this.noteModel.noteTags,
+        noteDocument: window.editor.getData(),
+      })
+    },
+    onDeleteNote() {
+      if (window.confirm("Вы точно хотите удалить заметку?")) {
+        this.$emit("delete", this.note.id);
+      }
     },
   },
 };
@@ -105,6 +126,6 @@ export default {
 
 <style>
 .ck-editor__editable {
-  height: 440px;
+  height: 450px;
 }
 </style>

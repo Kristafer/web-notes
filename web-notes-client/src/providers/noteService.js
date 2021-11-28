@@ -1,14 +1,39 @@
 import api from "../providers/api.js";
-import store from "../store/index.js";
 
-export const createNote = (title, noteData, user, tags) => {
-  return api.post("/Notes/CreateNote",  {
-    title: title,
-    noteDocument: noteData,
-    createdDateTine: new Date(),
-    userId: user.id,
-    tags: tags,
-  }, headers(user));
+export const createNote = (user, note) => {
+  return api.post(
+    "/Notes/CreateNote",
+    {
+      ...note,
+      userId: user.id,
+    },
+    headers(user)
+  );
+};
+
+export const updateNote = (user, note) => {
+  return api.post(
+    "/Notes/UpdateNote",
+    {
+      ...note,
+      userId: user.id,
+    },
+    headers(user)
+  );
+};
+export const deleteNote = (user, id) => {
+  return api.delete(
+    `/Notes/DeleteNote/${id}`,
+    headers(user)
+  );
+};
+
+export const getNotes = (user, searchValue = "") => {
+  return api.get(`/Notes/GetNotes?SearchValue=${searchValue}`, headers(user));
+};
+
+export const getNote = (id, user) => {
+  return api.get(`/Notes/GetNote/${id}`, headers(user));
 };
 
 function headers(user) {

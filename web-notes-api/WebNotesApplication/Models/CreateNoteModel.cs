@@ -12,6 +12,6 @@ namespace WebNotesApplication.Models
         public string NoteDocument { get; set; }
         public int UserId { get; set; }
 
-        public List<string> Tags { get; set; }
+        public List<string> NoteTags { get; set; }
     }
 }

@@ -9,7 +9,9 @@ namespace WebNotesApplication.Services
     {
         Task<AuthenticateResult> AuthenticateAsync(LoginModel model);
         Task<AuthenticateResult> RegisterAsync(User model);
-        Task<IEnumerable<User>> GetAllAsync();
+        Task<List<User>> GetAllAsync();
         Task<User> GetByIdAsync(int id);
+        Task DeleteUserAsync(int id);
+        Task ResetPassword(int id);
     }
 }

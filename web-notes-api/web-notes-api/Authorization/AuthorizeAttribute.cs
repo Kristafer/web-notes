@@ -30,7 +30,7 @@ namespace WebNotesApi.Authorization
 
             // authorization
             var roles = context.HttpContext.User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.Role);
-            if (_roles.Any() && !_roles.Contains((Role)int.Parse(roles.Value)))
+            if (roles != null && _roles.Any() && !_roles.Contains((Role)int.Parse(roles.Value)))
             {
                 // not logged in or role not authorized
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };

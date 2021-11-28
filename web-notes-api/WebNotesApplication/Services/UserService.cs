@@ -15,8 +15,8 @@ namespace WebNotesApplication.Services
 {
     public class UserService : IUserService
     {
-        private ApplicationContext _context;
-        private IJwtUtils _jwtUtils;
+        private readonly ApplicationContext _context;
+        private readonly IJwtUtils _jwtUtils;
         private readonly AppSettings _appSettings;
 
         private readonly IMapper _mapper;
@@ -53,9 +53,10 @@ namespace WebNotesApplication.Services
             return authResult;
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.AsNoTracking().ToListAsync();
+            return users;
         }
 
         public async Task<User> GetByIdAsync(int id)
@@ -69,16 +70,26 @@ namespace WebNotesApplication.Services
             return user;
         }
 
+        public Task DeleteUserAsync(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task ResetPassword(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<AuthenticateResult> RegisterAsync(User user)
         {
             var existUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == user.UserName);
-            if(existUser is not null)
+            if (existUser is not null)
             {
                 throw new AppException($"User with user name {user.UserName} exists");
             }
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
 
             var jwtToken = _jwtUtils.GenerateJwtToken(user);
 

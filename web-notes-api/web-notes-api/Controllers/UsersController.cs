@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebNotesApi.Authorization;
@@ -14,7 +15,7 @@ namespace WebNotesApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
         public UsersController(IUserService userService, IMapper mapper)
@@ -41,11 +42,27 @@ namespace WebNotesApi.Controllers
         }
 
         [Authorize(Role.Admin)]
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("[action]")]
+        public async Task<ActionResult<List<User>>> GetAll()
         {
             var users = await _userService.GetAllAsync();
-            return Ok(users);
+            return users;
+        }
+
+        [Authorize(Role.Admin)]
+        [HttpDelete("[action]/{id:int}")]
+        public async Task<ActionResult<List<User>>> Delete(int id)
+        {
+            await _userService.DeleteUserAsync(id);
+            return Ok();
+        }
+
+        [Authorize(Role.Admin)]
+        [HttpPost("[action]/{id:int}")]
+        public async Task<ActionResult<List<User>>> ResetPassword(int id)
+        {
+             await _userService.ResetPassword(id);
+            return Ok();
         }
 
         [HttpGet("{id:int}")]

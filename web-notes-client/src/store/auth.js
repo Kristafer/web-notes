@@ -9,6 +9,12 @@ export default {
     isAuthorized: (state) => {
       return !!state.user.token;
     },
+    role: (state) => {
+      return state.user.role;
+    },
+    isAdmin: (state) =>{
+      return state.user.role === "Admin";
+    }
   },
   mutations: {
     setUser(state, user) {

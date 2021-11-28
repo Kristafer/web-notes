@@ -12,13 +12,7 @@
         </div>
       </div>
       <div class="row flex-grow-1 p-0 m-0">
-        <div class="col-md-2  p-0 m-0 bg-warning">
-          <SideBar />
-        </div>
-
-        <div class="col-md-10  p-0 m-0">
-          <router-view />
-        </div>
+        <router-view />
       </div>
     </div>
   </template>
@@ -27,13 +21,11 @@
 <script>
 import { mapGetters } from "vuex";
 import NavBar from "@/components/NavBar";
-import SideBar from "@/components/SideBar";
 
 export default {
   name: "App",
   components: {
     NavBar,
-    SideBar,
   },
   created() {
     this.$store.dispatch("Auth/checkAuth");
@@ -49,5 +41,29 @@ html,
 body,
 #app {
   height: 100%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+.sidebar {
+  background-color: #10b981;
+  color: white;
 }
 </style>

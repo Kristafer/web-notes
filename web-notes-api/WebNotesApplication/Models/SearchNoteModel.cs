@@ -10,5 +10,6 @@ namespace WebNotesApplication.Models
     {
         public int Id { get; set; }
 
+        public string SearchValue { get; set; }
     }
 }

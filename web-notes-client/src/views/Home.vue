@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <!-- <Editor  /> -->
+    <p class="text-center fs-1 fw-bold">Web-notes</p>
   </div>
 </template>
 

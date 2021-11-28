@@ -34,9 +34,7 @@ namespace web_notes_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connection), ServiceLifetime.Transient);
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
             services.AddAutoMapper(typeof(Startup));
             services.AddCors();
             services.AddControllers().AddJsonOptions(x =>
