@@ -91,7 +91,7 @@ namespace WebNotesApplication.Services
 
         private async Task CreateOrUpdateTags(int noteId, List<string> tags)
         {
-            var existedNoteTags = await _context.NoteTags.AsNoTracking().Include(x=>x.Tag).Where(t => t.NoteId == noteId).ToListAsync();
+            var existedNoteTags = await _context.NoteTags.AsNoTracking().Include(x => x.Tag).Where(t => t.NoteId == noteId).ToListAsync();
 
             var removeNoteTags = existedNoteTags.Where(t => !tags.Contains(t.Tag.Value));
             var addTags = tags.Where(t => existedNoteTags.All(nt => nt.Tag.Value != t)).ToList();
