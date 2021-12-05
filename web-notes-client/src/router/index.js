@@ -5,6 +5,7 @@ import Register from "../views/Register.vue";
 import Notes from "../views/Notes.vue";
 import CreateNote from "../views/CreateNote.vue";
 import Users from "../views/Users.vue";
+import SharedNote from "../views/SharedNote.vue";
 import Store from "../store/index.js";
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
     name: "Users",
     component: Users,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/shared",
+    name: "Shared",
+    component: SharedNote,
   },
 ];
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebNotesApplication.Models;
 using WebNotesData.Entities;
@@ -13,5 +14,7 @@ namespace WebNotesApplication.Services
         Task<Note> CreateNoteAsync(CreateNoteModel createNoteModel);
         Task<Note> UpdateNoteAsync(UpdateNoteModel updateNoteModel);
         Task DeleteNoteAsync(int id);
+        Task<Guid> CreateSharedId(int id);
+        Task<List<string>> Tags(int noteId, int userId);
     }
 }

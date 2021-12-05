@@ -1,11 +1,32 @@
 <template>
   <div class="users-container container-fluid">
     <p class="fs-1 fw-bold text-center">Пользователи</p>
-    <div v-for="user in users" :key="user.id">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Имя</th>
+          <th scope="col">Имя учетной записи</th>
+          <th scope="col">Email</th>
+          <th scope="col">Роль</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <UserCard
+          v-for="user in users"
+          :key="user.id"
+          :user="user"
+          @delete="onDelete"
+          @reset="onReset"
+        />
+      </tbody>
+    </table>
+    <!-- <div v-for="user in users" :key="user.id">
       <UserCard :user="user" @delete="onDelete" @reset="onReset" />
-    </div>
+    </div> -->
   </div>
 </template>
+
 
 <script>
 import UserCard from "@/components/UserCard.vue";
@@ -26,12 +47,8 @@ export default {
     });
   },
   methods: {
-    onDelete(id) {
-      this.$emit("delete", user.id);
-    },
-    onReset(id) {
-      this.$emit("reset", user.id);
-    },
+    onDelete(id) {},
+    onReset(id) {},
   },
 };
 </script>

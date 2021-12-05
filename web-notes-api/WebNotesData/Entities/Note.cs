@@ -26,5 +26,7 @@ namespace WebNotesData.Entities
         public List<NoteTag> NoteTags { get; set; }
 
         public bool IsBookmark { get; set; }
+        
+        public List<ShareNote> ShareNotes { get; set; }
     }
 }

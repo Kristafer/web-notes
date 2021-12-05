@@ -18,11 +18,7 @@
       :closeOnSelect="false"
       :searchable="true"
       :createTag="true"
-      :options="[
-        { value: 'кино', label: 'кино' },
-        { value: 'музыка', label: 'музыка' },
-        { value: 'работа', label: 'работа' },
-      ]"
+      :options="noteModel.options"
     />
   </div>
   <div class="form-group pb-1">
@@ -39,8 +35,11 @@
       <button class="btn btn-danger me-md-2" v-on:click="onDeleteNote()">
         Удалить
       </button>
-      <button class="btn btn-primary" v-on:click="onUpdateNote()">
+      <button class="btn btn-primary me-md-2" v-on:click="onUpdateNote()">
         Обновить
+      </button>
+      <button class="btn btn-info" v-on:click="onShareNote()">
+        Поделиться
       </button>
     </div>
   </div>
@@ -48,7 +47,7 @@
 
 <script>
 import Multiselect from "@vueform/multiselect";
-import { createNote } from "../providers/noteService.js";
+import { getNoteSharedId } from "../providers/noteService.js";
 
 export default {
   name: "NoteForm",
@@ -67,6 +66,7 @@ export default {
         title: "",
         noteTags: [],
         noteDocument: "",
+        options: [],
       },
       options: ["Batman", "Robin", "Joker"],
     };
@@ -76,6 +76,9 @@ export default {
     note() {
       if (this.note) {
         this.noteModel = { ...this.note };
+        this.noteModel.options = this.note.allAccessTags.map((value) => {
+          return { value: value, label: value };
+        });
         window.editor.setData(this.noteModel.noteDocument);
       }
     },
@@ -105,7 +108,7 @@ export default {
         title: this.noteModel.title,
         noteTags: this.noteModel.noteTags,
         noteDocument: window.editor.getData(),
-      })
+      });
     },
     onUpdateNote() {
       this.$emit("update", {
@@ -113,12 +116,20 @@ export default {
         title: this.noteModel.title,
         noteTags: this.noteModel.noteTags,
         noteDocument: window.editor.getData(),
-      })
+      });
     },
     onDeleteNote() {
       if (window.confirm("Вы точно хотите удалить заметку?")) {
         this.$emit("delete", this.note.id);
       }
+    },
+    onShareNote() {
+      getNoteSharedId(this.note.id, this.$store.state.Auth.user).then(
+        ({ data }) => {
+          debugger;
+          alert(`http://localhost:8080/Shared?id=${data}`);
+        }
+      );
     },
   },
 };

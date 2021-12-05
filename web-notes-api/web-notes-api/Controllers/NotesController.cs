@@ -8,8 +8,15 @@ using WebNotesApi.Models.Notes;
 using WebNotesApi.Models.Users;
 using WebNotesApplication.Models;
 using WebNotesApplication.Services;
+using System.Collections.Generic;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using WebNotesApi.Authorization;
+using WebNotesApi.Models.Users;
+using WebNotesApplication.Models;
+using WebNotesApplication.Services;
 using WebNotesData.Entities;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace WebNotesApi.Controllers
 {
@@ -39,11 +46,17 @@ namespace WebNotesApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<List<NoteResponse>>> GetNotes([FromQuery] SearchNoteModel searchNoteModel)
+        public async Task<ActionResult<IEnumerable<NoteResponse>>> GetNotes([FromQuery] SearchNoteModel searchNoteModel)
         {
             var response = await _noteService.GetNotes(searchNoteModel);
+            var lResponse = _mapper.Map<IEnumerable<NoteResponse>>(response);
+            foreach (var note in lResponse)
+            {
+                note.AllAccessTags = await _noteService.Tags(note.Id, note.UserId);
 
-            return _mapper.Map<List<NoteResponse>>(response);
+            }
+
+            return new OkObjectResult(lResponse);
         }
 
         [HttpPost("[action]")]
@@ -51,7 +64,10 @@ namespace WebNotesApi.Controllers
         {
             var response = await _noteService.CreateNoteAsync(_mapper.Map<CreateNoteModel>(request));
 
-            return _mapper.Map<NoteResponse>(response);
+            var lResponse = _mapper.Map<NoteResponse>(response);
+            lResponse.AllAccessTags = await _noteService.Tags(lResponse.Id, lResponse.UserId);
+
+            return new OkObjectResult(lResponse);
         }
 
         [HttpPost("[action]")]
@@ -59,27 +75,42 @@ namespace WebNotesApi.Controllers
         {
             var response = await _noteService.UpdateNoteAsync(_mapper.Map<UpdateNoteModel>(request));
 
-            return _mapper.Map<NoteResponse>(response);
+            var lResponse = _mapper.Map<NoteResponse>(response);
+            lResponse.AllAccessTags = await _noteService.Tags(lResponse.Id, lResponse.UserId);
+
+            return new OkObjectResult(lResponse);
         }
 
         [HttpDelete("[action]/{id:int}")]
         public async Task<ActionResult> DeleteNote(int id)
         {
-             await _noteService.DeleteNoteAsync(id);
+            await _noteService.DeleteNoteAsync(id);
 
             return new OkResult();
         }
 
-        // [AllowAnonymous]
-        // [HttpGet("[action]/{id}")]
-        // public async Task<ActionResult<NoteResponse>> GetNoteShared(Guid id)
-        // {
-        //     var response = await _noteService.GetNote(new SearchNoteModel()
-        //     {
-        //         Id = id
-        //     });
-        //
-        //     return _mapper.Map<NoteResponse>(response);
-        // }
+        [AllowAnonymous]
+        [HttpGet("[action]/{id}")]
+        public async Task<ActionResult<NoteResponse>> GetNoteShared(Guid id)
+        {
+            var response = await _noteService.GetNote(new SearchNoteModel()
+            {
+                SharedId = id
+            });
+
+            var lResponse = _mapper.Map<NoteResponse>(response);
+            lResponse.AllAccessTags = await _noteService.Tags(lResponse.Id, lResponse.UserId);
+
+            return new OkObjectResult(lResponse);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]/{id}")]
+        public async Task<Guid> GetNoteSharedId(int id)
+        {
+            var response = await _noteService.CreateSharedId(id);
+
+            return response;
+        }
     }
 }

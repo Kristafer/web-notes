@@ -27,7 +27,11 @@ namespace WebNotesApplication.Services
 
         public async Task<Note> GetNote(SearchNoteModel searchNoteModel)
         {
-            var note = await _context.Notes.AsNoTracking().Include(x => x.NoteTags).ThenInclude(x => x.Tag).SingleOrDefaultAsync(n => n.Id == searchNoteModel.Id);
+            var note = await _context.Notes.AsNoTracking()
+                .Include(x => x.NoteTags)
+                .ThenInclude(x => x.Tag)
+                .Include(x=>x.ShareNotes)
+                .SingleOrDefaultAsync(n => n.Id == searchNoteModel.Id || n.ShareNotes.Any(s=>s.Link == searchNoteModel.SharedId.ToString()));
             if (note is null)
             {
                 throw new AppException($"Note with id = {searchNoteModel.Id} not founded");
@@ -87,6 +91,28 @@ namespace WebNotesApplication.Services
             _context.Notes.Remove(note);
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Guid> CreateSharedId(int id)
+        {
+            var note = await _context.Notes.SingleOrDefaultAsync(n => n.Id == id);
+            var shared = new ShareNote()
+            {
+                CreatedDateTime = DateTime.Now,
+                Link = Guid.NewGuid().ToString(),
+                NoteId = note.Id
+            };
+            await _context.ShareNotes.AddAsync(shared);
+            await _context.SaveChangesAsync();
+
+            return Guid.Parse(shared.Link);
+        }
+
+        public async Task<List<string>> Tags(int noteId, int userId)
+        {
+            var tags = _context.Tags.Where(x => x.UserId == userId || x.UserId == null);
+
+            return await tags.Select(t=>t.Value).Distinct().ToListAsync();
         }
 
         private async Task CreateOrUpdateTags(int noteId, List<string> tags)

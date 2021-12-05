@@ -1,30 +1,42 @@
 <template>
-  <div class="card m-0 mb-1">
+  <tr>
+    <th>
+      {{ fullName }}
+    </th>
+    <td>{{ user.userName }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.role }}</td>
+    <td>
+      <!-- <div
+        class="btn-group"
+        role="group"
+        aria-label="Basic mixed styles example"
+      > -->
+      <button type="button" class="btn btn-danger" v-on:click="onDelete">
+        Удалить
+      </button>
+      <button type="button" class="btn btn-primary" v-on:click="onReset">
+        Сбросить пароль
+      </button>
+      <!-- </div> -->
+    </td>
+  </tr>
+  <!-- <div class="card m-0 mb-1">
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
           <p class="p-0 m-0 fw-bold fs-4">
-            {{ fullName }}
           </p>
-          <p class="p-0 m-0 fs-6">Имя учетной записи: {{ user.userName }}</p>
-          <p class="p-0 m-0 fs-6">Email: {{ user.email }}</p>
-          <p class="p-0 m-0 fs-6">Роль: {{ user.role }}</p>
+          <p class="p-0 m-0 fs-6">Имя учетной записи: </p>
+          <p class="p-0 m-0 fs-6">Email: </p>
+          <p class="p-0 m-0 fs-6">Роль: </p>
         </div>
         <div class="col-md-6 text-end">
-          <div
-            class="btn-group"
-            role="group"
-            aria-label="Basic mixed styles example"
-          >
-            <button type="button" class="btn btn-danger" v-on:click="onDelete">Удалить</button>
-            <button type="button" class="btn btn-primary" v-on:click="onReset">
-              Сбросить пароль
-            </button>
-          </div>
+          
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 

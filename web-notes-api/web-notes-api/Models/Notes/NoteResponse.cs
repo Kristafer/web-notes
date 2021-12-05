@@ -14,5 +14,6 @@ namespace WebNotesApi.Models.Notes
         public int UserId { get; set; }
 
         public List<string> NoteTags { get; set; }
+        public List<string> AllAccessTags { get; set; }
     }
 }
