@@ -18,7 +18,7 @@
       :closeOnSelect="false"
       :searchable="true"
       :createTag="true"
-      :options="noteModel.options"
+      :options="categoryOptions"
     />
   </div>
   <div class="form-group pb-1">
@@ -47,7 +47,7 @@
 
 <script>
 import Multiselect from "@vueform/multiselect";
-import { getNoteSharedId } from "../providers/noteService.js";
+import { getNoteSharedId, getTags } from "../providers/noteService.js";
 
 export default {
   name: "NoteForm",
@@ -61,6 +61,7 @@ export default {
   },
   data() {
     return {
+      categoryOptions: [],
       editor: null,
       noteModel: {
         title: "",
@@ -71,14 +72,21 @@ export default {
       options: ["Batman", "Robin", "Joker"],
     };
   },
+  created() {
+    getTags(this.$store.state.Auth.user).then(({ data }) => {
+      this.categoryOptions = data.map((value) => {
+        return { value: value, label: value };
+      });
+    });
+  },
 
   watch: {
     note() {
       if (this.note) {
         this.noteModel = { ...this.note };
-        this.noteModel.options = this.note.allAccessTags.map((value) => {
-          return { value: value, label: value };
-        });
+        // this.noteModel.options = this.note.allAccessTags.map((value) => {
+        //   return { value: value, label: value };
+        // });
         window.editor.setData(this.noteModel.noteDocument);
       }
     },

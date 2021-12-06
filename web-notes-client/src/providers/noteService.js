@@ -37,6 +37,11 @@ export const getNoteSharedId = (id, user) => {
   return api.get(`/Notes/GetNoteSharedId/${id}`, headers(user));
 };
 
+export const getTags = ( user) => {
+  return api.get(`/Notes/GetTags/${user.id}`, headers(user));
+};
+
+
 export const getNoteShared= (id, user) => {
   return api.get(`/Notes/GetNoteShared/${id}`, headers(user));
 };

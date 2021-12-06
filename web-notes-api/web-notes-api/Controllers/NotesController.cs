@@ -52,7 +52,7 @@ namespace WebNotesApi.Controllers
             var lResponse = _mapper.Map<IEnumerable<NoteResponse>>(response);
             foreach (var note in lResponse)
             {
-                note.AllAccessTags = await _noteService.Tags(note.Id, note.UserId);
+                note.AllAccessTags = await _noteService.Tags( note.UserId);
 
             }
 
@@ -65,7 +65,7 @@ namespace WebNotesApi.Controllers
             var response = await _noteService.CreateNoteAsync(_mapper.Map<CreateNoteModel>(request));
 
             var lResponse = _mapper.Map<NoteResponse>(response);
-            lResponse.AllAccessTags = await _noteService.Tags(lResponse.Id, lResponse.UserId);
+            lResponse.AllAccessTags = await _noteService.Tags( lResponse.UserId);
 
             return new OkObjectResult(lResponse);
         }
@@ -76,7 +76,7 @@ namespace WebNotesApi.Controllers
             var response = await _noteService.UpdateNoteAsync(_mapper.Map<UpdateNoteModel>(request));
 
             var lResponse = _mapper.Map<NoteResponse>(response);
-            lResponse.AllAccessTags = await _noteService.Tags(lResponse.Id, lResponse.UserId);
+            lResponse.AllAccessTags = await _noteService.Tags( lResponse.UserId);
 
             return new OkObjectResult(lResponse);
         }
@@ -99,7 +99,7 @@ namespace WebNotesApi.Controllers
             });
 
             var lResponse = _mapper.Map<NoteResponse>(response);
-            lResponse.AllAccessTags = await _noteService.Tags(lResponse.Id, lResponse.UserId);
+            lResponse.AllAccessTags = await _noteService.Tags( lResponse.UserId);
 
             return new OkObjectResult(lResponse);
         }
@@ -109,6 +109,15 @@ namespace WebNotesApi.Controllers
         public async Task<Guid> GetNoteSharedId(int id)
         {
             var response = await _noteService.CreateSharedId(id);
+
+            return response;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]/{id}")]
+        public async Task<ActionResult<IEnumerable<string>>> GetTags(int userId)
+        {
+            var response = await _noteService.Tags(userId);
 
             return response;
         }

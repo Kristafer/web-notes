@@ -64,7 +64,7 @@ namespace WebNotesApplication.Services
             note.CreatedDateTime = DateTime.Now;
             await _context.Notes.AddAsync(note);
             await _context.SaveChangesAsync();
-            await CreateOrUpdateTags(note.Id, createNoteModel.NoteTags);
+            await CreateOrUpdateTags(note, createNoteModel.NoteTags);
             // TODO Add NoteTags create and update
 
             return await GetNoteFull(note.Id);// include extend table
@@ -80,7 +80,7 @@ namespace WebNotesApplication.Services
             // TODO Add NoteTags create and update
             _context.Notes.Update(note);
             await _context.SaveChangesAsync();
-            await CreateOrUpdateTags(note.Id, updateNoteModel.NoteTags);
+            await CreateOrUpdateTags(note, updateNoteModel.NoteTags);
 
             return await GetNoteFull(note.Id);// include extend table
         }
@@ -108,16 +108,20 @@ namespace WebNotesApplication.Services
             return Guid.Parse(shared.Link);
         }
 
-        public async Task<List<string>> Tags(int noteId, int userId)
+        public async Task<List<string>> Tags(int userId)
         {
             var tags = _context.Tags.Where(x => x.UserId == userId || x.UserId == null);
 
             return await tags.Select(t=>t.Value).Distinct().ToListAsync();
         }
 
-        private async Task CreateOrUpdateTags(int noteId, List<string> tags)
+        private async Task CreateOrUpdateTags(Note note, List<string> tags)
         {
-            var existedNoteTags = await _context.NoteTags.AsNoTracking().Include(x => x.Tag).Where(t => t.NoteId == noteId).ToListAsync();
+            var existedNoteTags = await _context.NoteTags
+                .AsNoTracking()
+                .Include(x => x.Tag)
+                .Where(t => t.NoteId == note.Id && (t.Tag.UserId == null || t.Tag.UserId == t.Tag.UserId))
+                .ToListAsync();
 
             var removeNoteTags = existedNoteTags.Where(t => !tags.Contains(t.Tag.Value));
             var addTags = tags.Where(t => existedNoteTags.All(nt => nt.Tag.Value != t)).ToList();
@@ -134,13 +138,14 @@ namespace WebNotesApplication.Services
             {
                 var newTag = new Tag()
                 {
-                    Value = tag
+                    Value = tag,
+                    UserId = note.UserId
                 };
                 await _context.Tags.AddAsync(newTag);
 
                 var newNoteTag = new NoteTag()
                 {
-                    NoteId = noteId,
+                    NoteId = note.Id,
                     Tag = newTag
                 };
                 await _context.NoteTags.AddAsync(newNoteTag);
@@ -152,7 +157,7 @@ namespace WebNotesApplication.Services
                 var existTag = await _context.Tags.SingleOrDefaultAsync(t => t.Value == tag.Value);
                 var newNoteTag = new NoteTag()
                 {
-                    NoteId = noteId,
+                    NoteId = note.Id,
                     TagId = existTag.Id
                 };
                 await _context.NoteTags.AddAsync(newNoteTag);

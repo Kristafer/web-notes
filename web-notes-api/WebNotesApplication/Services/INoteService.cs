@@ -15,6 +15,6 @@ namespace WebNotesApplication.Services
         Task<Note> UpdateNoteAsync(UpdateNoteModel updateNoteModel);
         Task DeleteNoteAsync(int id);
         Task<Guid> CreateSharedId(int id);
-        Task<List<string>> Tags(int noteId, int userId);
+        Task<List<string>> Tags( int userId);
     }
 }
