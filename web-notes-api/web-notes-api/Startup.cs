@@ -118,17 +118,6 @@ namespace web_notes_api
                 endpoints.MapControllers();
             });
         }
-
-        private void createTestUsers(ApplicationContext context)
-        {
-            // add hardcoded test users to db on startup
-            var testUsers = new List<User>
-            {
-                new User {  FirstName = "Admin", LastName = "User", UserName = "admin", PasswordHash = BCryptNet.HashPassword("admin"), Role = Role.Admin },
-                new User {  FirstName = "Normal", LastName = "User", UserName = "user", PasswordHash = BCryptNet.HashPassword("user"), Role = Role.User }
-            };
-            context.Users.AddRange(testUsers);
-            context.SaveChanges();
-        }
+        
     }
 }

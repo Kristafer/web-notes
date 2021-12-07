@@ -26,8 +26,6 @@ namespace WebNotesApi.Profiles
             CreateMap<UpdateNoteModel, Note>()
                 .ForMember(x => x.NoteTags, m => m.Ignore());
             CreateMap<Note, NoteResponse>().ForMember(x => x.NoteTags, c => c.MapFrom(t => t.NoteTags.Select(x => x.Tag.Value)));
-
-            //TODO add profile to create, update, search model
         }
     }
 }

@@ -1,57 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="WebNotesApplication.Authorization.JwtUtils" BaseTypeListCollapsed="true">
-    <Position X="1" Y="1.75" Width="1.5" />
+    <Position X="12" Y="0.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAACAA=</HashCode>
       <FileName>Authorization\JwtUtils.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_appSettings" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WebNotesApplication.Exceptions.AppException">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="19.25" Y="0.5" Width="3.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\AppException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Models.AuthenticateResult">
-    <Position X="7" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAACAEAAACAAAAAAEQAAAAAAAAAAAAAAAAAAAAABAAg=</HashCode>
       <FileName>Models\AuthenticateResult.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Models.CreateNoteModel">
-    <Position X="8.75" Y="1.5" Width="1.5" />
+    <Position X="5.25" Y="6.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgEAAAAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\CreateNoteModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Models.LoginModel">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="7" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Models\LoginModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Models.SearchNoteModel">
-    <Position X="4.75" Y="2.5" Width="1.5" />
+    <Position X="9" Y="2.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\SearchNoteModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Models.UpdateNoteModel">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+    <Position X="8" Y="7" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAgEAAAAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\UpdateNoteModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Services.NoteService" BaseTypeListCollapsed="true">
-    <Position X="9" Y="3.5" Width="1.5" />
+    <Position X="19" Y="7.75" Width="4.75" />
     <TypeIdentifier>
       <HashCode>EAgAgAABAEQABAAAAAABAAAAEAAAAEAAAQAAAAAAAAA=</HashCode>
       <FileName>Services\NoteService.cs</FileName>
@@ -63,47 +66,58 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="WebNotesApplication.Services.UserService" BaseTypeListCollapsed="true">
-    <Position X="6.75" Y="6.25" Width="1.5" />
+    <Position X="11.75" Y="4" Width="7" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAABAAAAAABAAAAAAAACAAgAAEAABRAIAA=</HashCode>
       <FileName>Services\UserService.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_appSettings" />
+      <Field Name="_context" />
+      <Field Name="_jwtUtils" />
+      <Field Name="_mapper" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="WebNotesApplication.AppSettings">
-    <Position X="2.5" Y="2.5" Width="1.5" />
+    <Position X="12.25" Y="2.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>AppSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesData.Context.ApplicationContext">
-    <Position X="12.5" Y="3.5" Width="1.5" />
+    <Position X="15.5" Y="0.5" Width="3.5" />
     <TypeIdentifier />
   </Class>
+  <Class Name="System.Exception">
+    <Position X="19.25" Y="2.75" Width="4.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="WebNotesApplication.Authorization.IJwtUtils">
-    <Position X="2" Y="4.5" Width="1.5" />
+    <Position X="8.5" Y="4.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAACAA=</HashCode>
       <FileName>Authorization\IJwtUtils.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WebNotesApplication.Services.INoteService">
-    <Position X="5" Y="3.75" Width="1.5" />
+    <Position X="4" Y="2" Width="4.75" />
     <TypeIdentifier>
       <HashCode>EAgAgAABAAQAAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Services\INoteService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="WebNotesApplication.Services.IUserService">
-    <Position X="6.75" Y="3.75" Width="1.5" />
+    <Position X="4" Y="4.25" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAEAAARAIAA=</HashCode>
       <FileName>Services\IUserService.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="AutoMapper.IMapper" Collapsed="true">
-    <Position X="12.75" Y="3.75" Width="1.5" />
+  <Interface Name="AutoMapper.IMapper">
+    <Position X="10.5" Y="6.5" Width="8.25" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -12,8 +12,6 @@ namespace WebNotesData.Entities
 
         [Required]
         public DateTime CreatedDateTime { get; set; }
-
-        
         public DateTime InactivatedDateTime { get; set; }
 
         public Note Note { get; set; }
