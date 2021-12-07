@@ -5,18 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebNotesApi.Authorization;
 using WebNotesApi.Models.Notes;
-using WebNotesApi.Models.Users;
 using WebNotesApplication.Models;
 using WebNotesApplication.Services;
-using System.Collections.Generic;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using WebNotesApi.Authorization;
-using WebNotesApi.Models.Users;
-using WebNotesApplication.Models;
-using WebNotesApplication.Services;
-using WebNotesData.Entities;
 
 namespace WebNotesApi.Controllers
 {

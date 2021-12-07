@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NUnit.Framework;
-using WebNotesApi.Controllers;
 using WebNotesApi.Profiles;
 using WebNotesApplication.Models;
 using WebNotesApplication.Services;
 using WebNotesData.Context;
-using WebNotesData.Entities;
 
 namespace WeNotesTest
 {
