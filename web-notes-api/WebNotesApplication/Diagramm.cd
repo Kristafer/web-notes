@@ -54,7 +54,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="WebNotesApplication.Services.NoteService" BaseTypeListCollapsed="true">
-    <Position X="19" Y="7.75" Width="4.75" />
+    <Position X="19.25" Y="7.5" Width="4.75" />
     <TypeIdentifier>
       <HashCode>EAgAgAABAEQABAAAAAABAAAAEAAAAEAAAQAAAAAAAAA=</HashCode>
       <FileName>Services\NoteService.cs</FileName>
@@ -72,9 +72,9 @@
       <FileName>Services\UserService.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_appSettings" />
       <Field Name="_context" />
       <Field Name="_jwtUtils" />
+      <Field Name="_appSettings" />
       <Field Name="_mapper" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
@@ -91,7 +91,7 @@
     <TypeIdentifier />
   </Class>
   <Class Name="System.Exception">
-    <Position X="19.25" Y="2.75" Width="4.5" />
+    <Position X="19" Y="2.75" Width="4.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
