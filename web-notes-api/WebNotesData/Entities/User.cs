@@ -16,5 +16,7 @@ namespace WebNotesData.Entities
         public string PasswordHash { get; set; }
 
         public List<Note> Notes { get; set; }
+
+        public List<Tag> Tags { get; set; }
     }
 }

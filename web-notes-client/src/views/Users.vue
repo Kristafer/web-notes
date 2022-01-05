@@ -21,16 +21,13 @@
         />
       </tbody>
     </table>
-    <!-- <div v-for="user in users" :key="user.id">
-      <UserCard :user="user" @delete="onDelete" @reset="onReset" />
-    </div> -->
   </div>
 </template>
 
 
 <script>
 import UserCard from "@/components/UserCard.vue";
-import { getUsers } from "../providers/userService.js";
+import { getUsers, deleteUser } from "../providers/userService.js";
 export default {
   name: "Users",
   components: {
@@ -47,7 +44,13 @@ export default {
     });
   },
   methods: {
-    onDelete(id) {},
+    onDelete(id) {
+      deleteUser(this.$store.state.Auth.user, id).then(() => {
+        getUsers(this.$store.state.Auth.user).then(({ data }) => {
+          this.users = data;
+        });
+      });
+    },
     onReset(id) {},
   },
 };

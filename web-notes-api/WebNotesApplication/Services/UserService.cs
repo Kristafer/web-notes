@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebNotesApplication.Authorization;
 using WebNotesApplication.Exceptions;
@@ -69,9 +70,23 @@ namespace WebNotesApplication.Services
             return user;
         }
 
-        public Task DeleteUserAsync(int id)
+        public async Task DeleteUserAsync(int id)
         {
-            throw new System.NotImplementedException();
+
+            var tags = _context.Tags.Where(x => x.UserId == id);
+            _context.RemoveRange(tags);
+
+            var noteTags = _context.NoteTags.Where(x => tags.Any(c => c.Id == x.TagId));
+
+            _context.NoteTags.RemoveRange(noteTags);
+
+            var notes = _context.Notes.Where(x => x.UserId == id);
+
+            _context.Notes.RemoveRange(notes);
+
+            var user = _context.Users.Find(id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
         public Task ResetPassword(int id)
