@@ -73,7 +73,10 @@
             <button class="btn btn-primary" type="submit">Регистрация</button>
           </div>
           <hr />
-          <p>Если у вас есть аккаунт вы можете войти: <router-link to="/login">Вход</router-link></p>
+          <p>
+            Если у вас есть аккаунт вы можете войти:
+            <router-link to="/login">Вход</router-link>
+          </p>
         </form>
       </div>
     </div>
@@ -96,7 +99,9 @@ export default {
   },
   methods: {
     register() {
-      this.$store.dispatch("Auth/register", this.registerModel);
+      this.$store.dispatch("Auth/register", this.registerModel).then(() => {
+        this.$router.push("CreateNote");
+      });
     },
   },
 };

@@ -26,7 +26,10 @@ export const deleteNote = (user, id) => {
 };
 
 export const getNotes = (user, searchValue = "") => {
-  return api.get(`/Notes/GetNotes?SearchValue=${searchValue}`, headers(user));
+  return api.get(
+    `/Notes/GetNotes?SearchValue=${searchValue}&&UserId=${user.id}`,
+    headers(user)
+  );
 };
 
 export const getNote = (id, user) => {
@@ -37,12 +40,11 @@ export const getNoteSharedId = (id, user) => {
   return api.get(`/Notes/GetNoteSharedId/${id}`, headers(user));
 };
 
-export const getTags = ( user) => {
+export const getTags = (user) => {
   return api.get(`/Notes/GetTags/${user.id}`, headers(user));
 };
 
-
-export const getNoteShared= (id, user) => {
+export const getNoteShared = (id, user) => {
   return api.get(`/Notes/GetNoteShared/${id}`, headers(user));
 };
 

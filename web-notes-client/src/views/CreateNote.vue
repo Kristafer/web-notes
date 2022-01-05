@@ -7,6 +7,7 @@
     <div class="p-3">
       <NoteForm
         :isNew="isNew"
+        :note="note"
         @create="onCreate"
         @update="onUpdate"
         @delete="onDelete"
@@ -27,6 +28,7 @@ export default {
   },
   data() {
     return {
+      note: null,
       isNew: true,
     };
   },
@@ -35,16 +37,19 @@ export default {
       createNote(this.$store.state.Auth.user, note).then(({ data }) => {
         this.isNew = false;
         console.log(data);
+       this.note = data;
       });
     },
     onUpdate(note) {
       updateNote(this.$store.state.Auth.user, note).then(({ data }) => {
+        debugger;
         console.log(data);
+       this.note = data;
       });
     },
     onDelete(id) {
       deleteNote(this.$store.state.Auth.user, id).then(() => {
-        this.$router.push("Notes");
+        this.$router.push("CreateNote");
       });
     },
   },

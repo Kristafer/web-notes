@@ -54,8 +54,7 @@ export default {
   methods: {
     login() {
       this.$store.dispatch("Auth/login", this.loginModel).then(() => {
-        debugger;
-        this.$router.push("Notes");
+        this.$router.push("CreateNote");
       });
     },
   },

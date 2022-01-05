@@ -6,6 +6,7 @@ namespace WebNotesApplication.Models
     {
         
         public int Id { get; set; }
+        public int UserId { get; set; }
         public Guid SharedId { get; set; }
 
         public string SearchValue { get; set; }

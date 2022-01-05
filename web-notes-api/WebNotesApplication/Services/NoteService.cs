@@ -45,10 +45,11 @@ namespace WebNotesApplication.Services
             var notes = await _context.Notes.AsNoTracking()
                 .Include(x => x.NoteTags).ThenInclude(x => x.Tag)
                 .Where(x =>
-                    string.IsNullOrEmpty(searchNoteModel.SearchValue) ||
+                    x.UserId == searchNoteModel.UserId &&
+                    (string.IsNullOrEmpty(searchNoteModel.SearchValue) ||
                     x.NoteDocument.Contains(searchNoteModel.SearchValue) ||
                     x.Title.Contains(searchNoteModel.SearchValue) ||
-                    x.NoteTags.Any(n => n.Tag.Value.Contains(searchNoteModel.SearchValue)))
+                    x.NoteTags.Any(n => n.Tag.Value.Contains(searchNoteModel.SearchValue))))
                 .ToListAsync();
             if (!notes.Any())
             {

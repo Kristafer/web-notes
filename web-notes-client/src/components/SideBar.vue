@@ -11,11 +11,11 @@
           ><i class="bi bi-file-earmark-text"></i> Заметки</router-link
         >
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <router-link class="nav-link text-white" :class="{'fw-bold': $route.name === 'ImportantNotes'}" to="/ImportantNotes"
           ><i class="bi bi-bookmark-check"></i> Важные заметки</router-link
         >
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

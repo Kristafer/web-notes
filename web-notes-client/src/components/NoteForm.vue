@@ -84,9 +84,6 @@ export default {
     note() {
       if (this.note) {
         this.noteModel = { ...this.note };
-        // this.noteModel.options = this.note.allAccessTags.map((value) => {
-        //   return { value: value, label: value };
-        // });
         window.editor.setData(this.noteModel.noteDocument);
       }
     },
@@ -119,6 +116,7 @@ export default {
       });
     },
     onUpdateNote() {
+      debugger;
       this.$emit("update", {
         ...this.note,
         title: this.noteModel.title,
